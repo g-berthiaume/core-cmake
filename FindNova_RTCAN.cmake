@@ -2,7 +2,7 @@ IF( NOT NOVA_RTCAN_ROOT )
   IF( NOT NOVA_ROOT )
     SET( NOVA_RTCAN_ROOT /opt/nova/rtcan )
   ELSE()
-    SET( NOVA_RTCAN_ROOT ${NOVA_ROOT}/rtcan )
+    SET( NOVA_RTCAN_ROOT ${NOVA_ROOT}/core-comm-can )
   ENDIF()
 
   MESSAGE( STATUS "No NOVA_RTCAN_ROOT specified, using default: ${NOVA_RTCAN_ROOT}" )

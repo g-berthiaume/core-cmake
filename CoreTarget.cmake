@@ -3,7 +3,6 @@ include(CMakeParseArguments)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 cmake_policy(SET CMP0005 NEW)
-#INCLUDE ( "/home/davide/Work/Nova/BuildSystem/sandbox2/Core/nova-cmake/gcc_stm32.cmake" )
 
 MACRO( core_target_module )
 

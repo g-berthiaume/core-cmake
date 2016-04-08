@@ -2,7 +2,7 @@ IF( NOT NOVA_MW_ROOT )
   IF( NOT NOVA_ROOT )
     SET( NOVA_MW_ROOT /opt/nova/middleware )
   ELSE()
-    SET( NOVA_MW_ROOT ${NOVA_ROOT}/middleware )
+    SET( NOVA_MW_ROOT ${NOVA_ROOT}/core-mw )
   ENDIF()
 
   MESSAGE( STATUS "No NOVA_MW_ROOT specified, using default: ${NOVA_MW_ROOT}" )
