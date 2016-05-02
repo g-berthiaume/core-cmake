@@ -65,7 +65,49 @@ IF(STM32_FAMILY STREQUAL "F1")
         nvic.c
     )
 ELSEIF(STM32_FAMILY STREQUAL "F3")
+  IF(STM32_CHIP STREQUAL "STM32F373CB")
     SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu mac pal pwm rtc sdc serial spi st uart usb)
+    SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
+      STM32F37x 
+      LLD
+      LLD/DACv1
+      LLD
+      LLD/TIMv1
+      LLD/I2Cv2
+      LLD/SPIv2
+      LLD/TIMv1
+      LLD
+      LLD/GPIOv2
+      LLD/TIMv1
+      LLD/RTCv2
+      LLD
+      LLD/USARTv2 
+      LLD/SPIv2
+      LLD/TIMv1
+      LLD/USARTv2
+      LLD/USBv1
+    )
+    
+    SET(CHIBIOS_hal_PLATFORM_SEARCH_PATH
+        ${CHIBIOS_ROOT}/os/hal/ports/common/ARMCMx
+        ${CHIBIOS_ROOT}/os/hal/ports/STM32/STM32F37x
+        ${CHIBIOS_ROOT}/os/hal/ports/STM32
+        ${CHIBIOS_ROOT}/os/hal/ports/STM32/LLD/DMAv2
+    )
+    SET(CHIBIOS_hal_PLATFORM_SEARCH_HEADERS
+        hal_lld.h
+        stm32_dma.h
+        nvic.h
+        ext_lld_isr.h
+    )
+    SET(CHIBIOS_hal_PLATFORM_SOURCES  
+        hal_lld.c
+        stm32_dma.c
+        nvic.c
+        ext_lld_isr.c
+    )
+  ELSE()
+      SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu mac pal pwm rtc sdc serial spi st uart usb)
     SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
       STM32F3xx 
       LLD
@@ -103,6 +145,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
         stm32_dma.c
         nvic.c
     )
+  ENDIF()
 ELSEIF(STM32_FAMILY STREQUAL "F4")
     SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu mac pal pwm rtc sdc serial spi st uart usb)
     SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
