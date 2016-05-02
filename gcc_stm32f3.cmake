@@ -5,11 +5,11 @@ SET(CMAKE_ASM_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard 
 SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
 SET(CMAKE_MODULE_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "module linker flags")
 SET(CMAKE_SHARED_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "shared linker flags")
-SET(STM32_CHIP_TYPES 303xx CACHE INTERNAL "stm32f3 chip types")
-SET(STM32_CODES "303..")
+SET(STM32_CHIP_TYPES 303xx 373xx CACHE INTERNAL "stm32f3 chip types")
+SET(STM32_CODES "303.." "373..")
 
 MACRO(STM32_GET_CHIP_TYPE CHIP CHIP_TYPE)
-    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF](3[0][3].[B]).*$" "\\1" STM32_CODE ${CHIP})
+    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF](3[07][3].[BC]).*$" "\\1" STM32_CODE ${CHIP})
     SET(INDEX 0)
     FOREACH(C_TYPE ${STM32_CHIP_TYPES})
         LIST(GET STM32_CODES ${INDEX} CHIP_TYPE_REGEXP)
@@ -22,16 +22,20 @@ MACRO(STM32_GET_CHIP_TYPE CHIP CHIP_TYPE)
 ENDMACRO()
 
 MACRO(STM32_GET_CHIP_PARAMETERS CHIP FLASH_SIZE RAM_SIZE)
-    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF](3[0][3].[B]).*$" "\\1" STM32_CODE ${CHIP})
-    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF]3[0][3].([B]).*$" "\\1" STM32_SIZE_CODE ${CHIP})
+    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF](3[07][3].[BC]).*$" "\\1" STM32_CODE ${CHIP})
+    STRING(REGEX REPLACE "^[sS][tT][mM]32[fF]3[07][3].([BC]).*$" "\\1" STM32_SIZE_CODE ${CHIP})
     
     IF(STM32_SIZE_CODE STREQUAL "B")
         SET(FLASH "128K")
+    ELSEIF(STM32_SIZE_CODE STREQUAL "C")
+        SET(FLASH "256K")
     ENDIF()
     
     STM32_GET_CHIP_TYPE(${CHIP} TYPE)
     
     IF(${TYPE} STREQUAL "303xx")
+        SET(RAM "32K")
+    ELSEIF(${TYPE} STREQUAL "373xx")
         SET(RAM "32K")
     ENDIF()
     
