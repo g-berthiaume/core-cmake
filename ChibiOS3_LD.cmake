@@ -48,6 +48,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"_user_address_top = ORIGIN(user) + LENGTH(user);\n"
 	"PROVIDE(user_address_bottom = _user_address_bottom);\n"
 	"PROVIDE(user_address_top = _user_address_top);\n"
+	"_conf_address_bottom = ORIGIN(conf);\n"
+	"_conf_address_top = ORIGIN(conf) + LENGTH(conf);\n"
+	"PROVIDE(conf_address_bottom = _conf_address_bottom);\n"
+	"PROVIDE(conf_address_top = _conf_address_top);\n"
 	"INCLUDE rules.ld\n"      
       )
     ELSE()
@@ -71,6 +75,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"REGION_ALIAS(\"DATA_RAM\", ram0);\n"
 	"REGION_ALIAS(\"BSS_RAM\", ram0);\n"
 	"REGION_ALIAS(\"HEAP_RAM\", ram0);\n"
+	"_conf_address_bottom = ORIGIN(conf);\n"
+	"_conf_address_top = ORIGIN(conf) + LENGTH(conf);\n"
+	"PROVIDE(conf_address_bottom = _conf_address_bottom);\n"
+	"PROVIDE(conf_address_top = _conf_address_top);\n"
 	"INCLUDE rules.ld\n"      
       )
     ENDIF()
@@ -78,7 +86,8 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
     FILE(WRITE ${CMAKE_BINARY_DIR}/chibios_link.ld.in 
       "MEMORY\n"
       "{\n"
-      "  flash : org = 0x08000000, len = \${STM32_FLASH_SIZE}\n"
+      "  conf : org = 0x08000000, len = \${CONFIGURATION_SIZE}\n"
+      "  flash : org = 0x08000000 + \${CONFIGURATION_SIZE}, len = \${STM32_FLASH_SIZE} - \${CONFIGURATION_SIZE}\n"
       "  ram0 : org = 0x20000000, len = \${STM32_RAM_SIZE}\n"
       "  ram1 : org = 0x00000000, len = 0\n"
       "  ram2 : org = 0x00000000, len = 0\n"
@@ -93,6 +102,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
       "REGION_ALIAS(\"DATA_RAM\", ram0);\n"
       "REGION_ALIAS(\"BSS_RAM\", ram0);\n"
       "REGION_ALIAS(\"HEAP_RAM\", ram0);\n"
+      "_conf_address_bottom = ORIGIN(conf);\n"
+      "_conf_address_top = ORIGIN(conf) + LENGTH(conf);\n"
+      "PROVIDE(conf_address_bottom = _conf_address_bottom);\n"
+      "PROVIDE(conf_address_top = _conf_address_top);\n"
       "INCLUDE rules.ld\n"      
     )
   ENDIF()
