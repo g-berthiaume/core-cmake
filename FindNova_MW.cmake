@@ -36,6 +36,8 @@ SET( NOVA_MW_SOURCES
   ${NOVA_MW_ROOT}/src/CoreNodeManager.cpp
   ${NOVA_MW_ROOT}/src/CoreConfiguration.cpp
   ${NOVA_MW_ROOT}/src/CoreModule.cpp
+  
+  ${NOVA_MW_ROOT}/src/UID.cpp
 
   ${NOVA_MW_ROOT}/port/chibios/src/impl/Middleware_.cpp
   ${NOVA_MW_ROOT}/port/chibios/src/impl/Time_.cpp
