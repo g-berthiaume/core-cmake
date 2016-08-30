@@ -1,5 +1,7 @@
 include(CMakeParseArguments)
 
+find_program(OPENOCD openocd)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 cmake_policy(SET CMP0005 NEW)
@@ -95,5 +97,31 @@ TARGET_LINK_LIBRARIES("firmware")
 
 STM32_SET_TARGET_PROPERTIES("firmware")
 STM32_ADD_HEX_BIN_TARGETS("firmware")
+
+IF(OPENOCD)
+  IF(STM32_FAMILY STREQUAL "F3")
+      SET(TARGET_FILE "stm32f3x_stlink.cfg")
+  ELSEIF(STM32_FAMILY STREQUAL "F4")
+      SET(TARGET_FILE "stm32f4x_stlink.cfg")
+  ELSE()
+      SET(TARGET_FILE "- none -")
+  ENDIF()
+  
+  MESSAGE( STATUS "openocd found: ${OPENOCD}" )
+  MESSAGE( STATUS "openocd target file: ${TARGET_FILE}" )
+  IF(TARGET_FILE STREQUAL "- none -")
+    MESSAGE( STATUS "Skipping..." )
+  ELSE()
+      add_custom_target(flash
+        DEPENDS firmware
+        COMMAND ${OPENOCD} -f 'interface/stlink-v2.cfg' -f 'target/${TARGET_FILE}'
+          -c 'init'
+          -c 'reset init'
+          -c 'halt'
+          -c 'flash write_image erase firmware'
+          -c 'shutdown'
+      )
+  ENDIF()
+ENDIF()
 
 ENDMACRO()
