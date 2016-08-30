@@ -44,8 +44,8 @@ SET(CMAKE_ASM_COMPILER ${TOOLCHAIN_BIN_DIR}/${TARGET_TRIPLET}-gcc)
 SET(CMAKE_OBJCOPY ${TOOLCHAIN_BIN_DIR}/${TARGET_TRIPLET}-objcopy CACHE INTERNAL "objcopy tool")
 SET(CMAKE_OBJDUMP ${TOOLCHAIN_BIN_DIR}/${TARGET_TRIPLET}-objdump CACHE INTERNAL "objdump tool")
 
-SET(CMAKE_C_FLAGS_DEBUG "-O0 -ggdb" CACHE INTERNAL "c compiler flags debug")
-SET(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb" CACHE INTERNAL "cxx compiler flags debug")
+SET(CMAKE_C_FLAGS_DEBUG "-Og -ggdb" CACHE INTERNAL "c compiler flags debug")
+SET(CMAKE_CXX_FLAGS_DEBUG "-Og -ggdb" CACHE INTERNAL "cxx compiler flags debug")
 SET(CMAKE_ASM_FLAGS_DEBUG "-ggdb" CACHE INTERNAL "asm compiler flags debug")
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "" CACHE INTERNAL "linker flags debug")
 
