@@ -3,6 +3,7 @@ SET(CMAKE_CXX_FLAGS "-mthumb -fno-builtin -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfl
 SET(CMAKE_ASM_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -x assembler-with-cpp" CACHE INTERNAL "asm compiler flags")
 
 IF(STM32_USE_NANO_SPECS)
+  MESSAGE(STATUS "Using nano.specs")
   SET(CMAKE_EXE_LINKER_FLAGS "-specs nano.specs -Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
 ELSE()
   SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
