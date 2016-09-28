@@ -36,6 +36,7 @@ SET( NOVA_CORE_MW_SOURCES
   ${NOVA_CORE_MW_ROOT}/src/CoreNode.cpp
   ${NOVA_CORE_MW_ROOT}/src/CoreNodeManager.cpp
   ${NOVA_CORE_MW_ROOT}/src/CoreConfiguration.cpp
+  ${NOVA_CORE_MW_ROOT}/src/CoreConfigurationManager.cpp
   ${NOVA_CORE_MW_ROOT}/src/CoreModule.cpp
   
   ${NOVA_CORE_MW_ROOT}/src/UID.cpp
