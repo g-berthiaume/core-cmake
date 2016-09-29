@@ -40,14 +40,25 @@ SET(CHIBIOS_rt_SOURCES
   chmempools.c
 )
 
-IF(STM32_FAMILY STREQUAL "F1")
+IF(STM32_FAMILY STREQUAL "F0")
+  SET(CHIBIOS_rt_PLATFORM_SEARCH_PATH
+    ${CHIBIOS_ROOT}/os/common/ports/ARMCMx/devices/STM32F0xx
+    ${CHIBIOS_ROOT}/os/ext/CMSIS/include
+    ${CHIBIOS_ROOT}/os/ext/CMSIS/ST
+  )
+  SET(CHIBIOS_rt_PLATFORM_SEARCH_HEADERS
+    core_cm3.h
+    stm32f0xx.h
+    cmparams.h
+  )
+ELSEIF(STM32_FAMILY STREQUAL "F1")
   SET(CHIBIOS_rt_PLATFORM_SEARCH_PATH
     ${CHIBIOS_ROOT}/os/common/ports/ARMCMx/devices/STM32F1xx
     ${CHIBIOS_ROOT}/os/ext/CMSIS/include
     ${CHIBIOS_ROOT}/os/ext/CMSIS/ST
   )
   SET(CHIBIOS_rt_PLATFORM_SEARCH_HEADERS
-    core_cm3.h
+    core_cm4.h
     stm32f10x.h
     cmparams.h
   )
