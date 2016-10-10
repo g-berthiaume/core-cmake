@@ -1,5 +1,5 @@
 SET(CHIBIOS_HAL_LIB_MODULES chprintf memstreams nullstreams)
-SET(CHIBIOS_HAL_MODULES adc can dac ext gpt i2c i2s icu mac mmc_spi mmcsd pal pwm rtc sdc serial serial_usb spi st uart usb)
+SET(CHIBIOS_HAL_MODULES adc can dac ext gpt i2c i2s icu mac mmc_spi mmcsd pal pwm rtc sdc serial serial_usb hal_buffers spi st uart usb)
 
 IF(${CHIBIOS_KERNEL} STREQUAL nil)
   SET(CHIBIOS_OSAL_PATH ${CHIBIOS_ROOT}/os/hal/osal/nil)
@@ -12,9 +12,13 @@ SET(CHIBIOS_hal_SEARCH_HEADERS hal.h osal.h)
 SET(CHIBIOS_hal_SOURCES hal.c hal_queues.c osal.c)
 
 FOREACH(module ${CHIBIOS_HAL_MODULES})
-  SET(CHIBIOS_${module}_SEARCH_PATH ${CHIBIOS_ROOT}/os/hal/include ${CHIBIOS_ROOT}/os/hal/src)
-  SET(CHIBIOS_${module}_SOURCES ${module}.c)
-  SET(CHIBIOS_${module}_SEARCH_HEADERS ${module}.h)
+  IF(${module} STREQUAL "hal_buffers")
+        MESSAGE(STATUS "hal_buffers is not supported, but it is a do not care, so we do not care")
+  ELSE()
+    SET(CHIBIOS_${module}_SEARCH_PATH ${CHIBIOS_ROOT}/os/hal/include ${CHIBIOS_ROOT}/os/hal/src)
+    SET(CHIBIOS_${module}_SOURCES ${module}.c)
+    SET(CHIBIOS_${module}_SEARCH_HEADERS ${module}.h)
+  ENDIF()
   
   IF(${module} STREQUAL mmcsd)
     SET(CHIBIOS_${module}_SOURCES hal_mmcsd.c)
