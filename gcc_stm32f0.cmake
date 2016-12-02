@@ -4,9 +4,9 @@ SET(CMAKE_ASM_FLAGS "-mthumb -mcpu=cortex-m0 -x assembler-with-cpp" CACHE INTERN
 
 IF(STM32_USE_NANO_SPECS)
   MESSAGE(STATUS "Using nano.specs")
-  SET(CMAKE_EXE_LINKER_FLAGS "-specs nano.specs -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
+  SET(CMAKE_EXE_LINKER_FLAGS "-specs nano.specs -Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
 ELSE()
-  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
+  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
 ENDIF()
 
 SET(CMAKE_MODULE_LINKER_FLAGS "-mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "module linker flags")
