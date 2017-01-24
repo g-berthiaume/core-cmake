@@ -183,7 +183,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     ELSE()
       SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu pal pwm rtc sdc serial spi st uart usb)
       SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
-	STM32F3xx 
+	LLD/ADCv3
 	LLD/CANv1
 	LLD/DACv1
 	LLD/EXTIv1
@@ -224,7 +224,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     SET(INDEX 0)
     FOREACH(module ${CHIBIOS_HAL_PLATFORM_MODULES})
         LIST(GET CHIBIOS_HAL_PLATFORM_MODULES_PATHES ${INDEX} path)
-
+	
         SET(CHIBIOS_${module}_PLATFORM_SEARCH_PATH ${CHIBIOS_ROOT}/os/hal/ports/STM32/${path})
         SET(CHIBIOS_${module}_PLATFORM_SEARCH_HEADERS ${module}_lld.h)
         SET(CHIBIOS_${module}_PLATFORM_SOURCES ${module}_lld.c)
