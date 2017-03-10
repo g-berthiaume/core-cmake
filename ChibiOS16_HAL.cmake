@@ -18,6 +18,7 @@ FOREACH(module ${CHIBIOS_HAL_MODULES})
 
   IF(${module} STREQUAL mmcsd)
     SET(CHIBIOS_${module}_SOURCES hal_mmcsd.c)
+    SET(CHIBIOS_${module}_SEARCH_HEADERS hal_mmcsd.h)
   ENDIF()
 ENDFOREACH()
 
@@ -183,7 +184,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     ELSE()
       SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu pal pwm rtc sdc serial spi st uart usb)
       SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
-	STM32F3xx 
+	LLD/ADCv3 
 	LLD/CANv1
 	LLD/DACv1
 	LLD/EXTIv1
