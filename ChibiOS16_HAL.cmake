@@ -18,6 +18,7 @@ FOREACH(module ${CHIBIOS_HAL_MODULES})
 
   IF(${module} STREQUAL mmcsd)
     SET(CHIBIOS_${module}_SOURCES hal_mmcsd.c)
+    SET(CHIBIOS_${module}_SEARCH_HEADERS hal_mmcsd.h)
   ENDIF()
 ENDFOREACH()
 
@@ -224,7 +225,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     SET(INDEX 0)
     FOREACH(module ${CHIBIOS_HAL_PLATFORM_MODULES})
         LIST(GET CHIBIOS_HAL_PLATFORM_MODULES_PATHES ${INDEX} path)
-	
+
         SET(CHIBIOS_${module}_PLATFORM_SEARCH_PATH ${CHIBIOS_ROOT}/os/hal/ports/STM32/${path})
         SET(CHIBIOS_${module}_PLATFORM_SEARCH_HEADERS ${module}_lld.h)
         SET(CHIBIOS_${module}_PLATFORM_SOURCES ${module}_lld.c)

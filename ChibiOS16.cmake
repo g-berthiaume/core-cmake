@@ -3,6 +3,7 @@ IF(NOT ChibiOS_FIND_COMPONENTS)
     MESSAGE(STATUS "No ChibiOS components specified, using default: ${ChibiOS_FIND_COMPONENTS}")
 ENDIF()
 
+MESSAGE(STATUS "ChibiOS components: ${ChibiOS_FIND_COMPONENTS}")
 
 LIST(FIND ChibiOS_FIND_COMPONENTS nil ChibiOS_FIND_COMPONENTS_nil)
 LIST(FIND ChibiOS_FIND_COMPONENTS rt ChibiOS_FIND_COMPONENTS_rt)
@@ -15,7 +16,8 @@ IF((${ChibiOS_FIND_COMPONENTS_nil} LESS 0) AND (${ChibiOS_FIND_COMPONENTS_rt} LE
   SET(CHIBIOS_KERNEL nil)
 ELSE()
   IF((NOT (${ChibiOS_FIND_COMPONENTS_nil} LESS 0)) AND (NOT (${ChibiOS_FIND_COMPONENTS_rt} LESS 0)))
-    MESSAGE(FATAL_ERROR "Cannot use RT and Nil kernel at the same time")
+    MESSAGE(WARNING "Cannot use RT and nil kernel at the same time - nil will win")
+    SET(CHIBIOS_KERNEL nil)
   ENDIF()
   IF(NOT (${ChibiOS_FIND_COMPONENTS_nil} LESS 0))
     SET(CHIBIOS_KERNEL nil)
