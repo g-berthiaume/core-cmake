@@ -4,7 +4,7 @@ IF(NOT CHIBIOS_ROOT)
 ENDIF()
 
 
-MESSAGE(STATUS "Chibios version:" ${ChibiOS_FIND_VERSION_MAJOR})
+MESSAGE(STATUS "ChibiOS version:" ${ChibiOS_FIND_VERSION_MAJOR})
 
 IF(ChibiOS_FIND_VERSION_MAJOR EQUAL 2)
   MESSAGE(FATAL_ERROR "ChibiOS v2.x.x is not supported. Use older version of stm32-cmake")

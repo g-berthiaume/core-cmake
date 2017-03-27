@@ -184,7 +184,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     ELSE()
       SET(CHIBIOS_HAL_PLATFORM_MODULES adc can dac ext gpt i2c i2s icu pal pwm rtc sdc serial spi st uart usb)
       SET(CHIBIOS_HAL_PLATFORM_MODULES_PATHES 
-	LLD/ADCv3 
+	LLD/ADCv3
 	LLD/CANv1
 	LLD/DACv1
 	LLD/EXTIv1
