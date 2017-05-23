@@ -71,9 +71,9 @@ SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -g -flto" CACHE INTERNAL "cxx compiler flags re
 SET(CMAKE_ASM_FLAGS_RELEASE "-g" CACHE INTERNAL "asm compiler flags release")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-flto" CACHE INTERNAL "linker flags release")
 
-SET(CMAKE_C_FLAGS_MINSIZEREL "-Os -flto" CACHE INTERNAL "c compiler flags release")
-SET(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -flto" CACHE INTERNAL "cxx compiler flags release")
-SET(CMAKE_ASM_FLAGS_MINSIZEREL "" CACHE INTERNAL "asm compiler flags release")
+SET(CMAKE_C_FLAGS_MINSIZEREL "-Os -g -flto" CACHE INTERNAL "c compiler flags release")
+SET(CMAKE_CXX_FLAGS_MINSIZEREL "-Os -g -flto" CACHE INTERNAL "cxx compiler flags release")
+SET(CMAKE_ASM_FLAGS_MINSIZEREL "-g" CACHE INTERNAL "asm compiler flags release")
 SET(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "-flto" CACHE INTERNAL "linker flags release")
 
 SET(CMAKE_FIND_ROOT_PATH ${TOOLCHAIN_PREFIX}/${TARGET_TRIPLET} ${EXTRA_FIND_PATH})
