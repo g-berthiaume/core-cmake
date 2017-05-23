@@ -18,6 +18,7 @@ ENDIF()
 ENABLE_LANGUAGE( ASM )
 
 MESSAGE( STATUS "Core Bootloader Target Module: ${CORE_TARGET_MODULE}" )
+MESSAGE( STATUS "Core Bootloader Target Name: ${CORE_TARGET_NAME}" )
 MESSAGE( STATUS "Core Bootloader Target OS Version: ${CORE_TARGET_OS_VERSION}" )
 MESSAGE( STATUS "Core Bootloader Target Packages: ${CORE_MODULE_PACKAGES}" )
 
