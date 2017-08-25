@@ -6,7 +6,7 @@ IF( NOT EXISTS ${LWIP})
 ENDIF()
 
 SET(LWBINDSRC 
-	${CHIBIOS_ROOT}/os/various/lwip_bindings/lwipthread.c
+#	${CHIBIOS_ROOT}/os/various/lwip_bindings/lwipthread.c
 	${CHIBIOS_ROOT}/os/various/lwip_bindings/arch/sys_arch.c
 )
 
