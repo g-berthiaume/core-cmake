@@ -18,6 +18,7 @@ SET( NOVA_CORE_MW_SOURCES
   ${NOVA_CORE_MW_ROOT}/src/BasePublisher.cpp
   ${NOVA_CORE_MW_ROOT}/src/BaseSubscriber.cpp
   ${NOVA_CORE_MW_ROOT}/src/BaseSubscriberQueue.cpp
+  ${NOVA_CORE_MW_ROOT}/src/BootloaderMaster.cpp
   ${NOVA_CORE_MW_ROOT}/src/BootMsg.cpp
   ${NOVA_CORE_MW_ROOT}/src/Checksummer.cpp
   ${NOVA_CORE_MW_ROOT}/src/LocalPublisher.cpp
