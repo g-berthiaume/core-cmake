@@ -13,6 +13,8 @@ SET(CMAKE_MODULE_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat
 SET(CMAKE_SHARED_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "shared linker flags")
 SET(STM32_CHIP_TYPES 303xx 373xx CACHE INTERNAL "stm32f3 chip types")
 SET(STM32_CODES "303.." "373..")
+#SET(STM32_CHIP_TYPES 303xx 303xC 373xx CACHE INTERNAL "stm32f3 chip types")
+#SET(STM32_CODES "303.." "303.C" "373..")
 
 MACRO(STM32_GET_CHIP_TYPE CHIP CHIP_TYPE)
     STRING(REGEX REPLACE "^[sS][tT][mM]32[fF](3[07][3].[BC]).*$" "\\1" STM32_CODE ${CHIP})
@@ -33,16 +35,20 @@ MACRO(STM32_GET_CHIP_PARAMETERS CHIP FLASH_SIZE RAM_SIZE)
     
     IF(STM32_SIZE_CODE STREQUAL "B")
         SET(FLASH "128K")
+        SET(RAM "32K")
     ELSEIF(STM32_SIZE_CODE STREQUAL "C")
         SET(FLASH "256K")
+        SET(RAM "40K")
     ENDIF()
     
     STM32_GET_CHIP_TYPE(${CHIP} TYPE)
     
     IF(${TYPE} STREQUAL "303xx")
-        SET(RAM "32K")
+        #SET(RAM "32K")
+    ELSEIF(${TYPE} STREQUAL "303xC")
+        #SET(RAM "40K")
     ELSEIF(${TYPE} STREQUAL "373xx")
-        SET(RAM "32K")
+        #SET(RAM "32K")
     ENDIF()
     
     SET(${FLASH_SIZE} ${FLASH})
