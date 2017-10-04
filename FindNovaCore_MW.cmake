@@ -28,6 +28,7 @@ SET( NOVA_CORE_MW_SOURCES
   ${NOVA_CORE_MW_ROOT}/src/Node.cpp
   ${NOVA_CORE_MW_ROOT}/src/RemotePublisher.cpp
   ${NOVA_CORE_MW_ROOT}/src/RemoteSubscriber.cpp
+  ${NOVA_CORE_MW_ROOT}/src/RPC.cpp
   ${NOVA_CORE_MW_ROOT}/src/TimestampedMsgPtrQueue.cpp
   ${NOVA_CORE_MW_ROOT}/src/Topic.cpp
   ${NOVA_CORE_MW_ROOT}/src/Transport.cpp
