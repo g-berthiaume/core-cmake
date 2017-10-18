@@ -2,12 +2,8 @@ SET(CMAKE_C_FLAGS   "-mthumb -falign-functions=16 -mno-thumb-interwork -fno-buil
 SET(CMAKE_CXX_FLAGS "-mthumb -falign-functions=16 -mno-thumb-interwork -fno-builtin -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -Wall -std=c++11 -fno-exceptions -fno-unwind-tables -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer -mabi=aapcs -fno-unroll-loops -ffast-math -ftree-vectorize -fno-rtti -DTHUMB_PRESENT -DTHUMB_NO_INTERWORKING -DTHUMB" CACHE INTERNAL "cxx compiler flags")
 SET(CMAKE_ASM_FLAGS "-mthumb -falign-functions=16 -mno-thumb-interwork -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -x assembler-with-cpp -DTHUMB_PRESENT -DTHUMB_NO_INTERWORKING -DTHUMB" CACHE INTERNAL "asm compiler flags")
 
-IF(STM32_USE_NANO_SPECS)
-  MESSAGE(STATUS "Using nano.specs")
-  SET(CMAKE_EXE_LINKER_FLAGS "-specs nano.specs -Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
-ELSE()
-  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
-ENDIF()
+SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "executable linker flags")
+
 
 SET(CMAKE_MODULE_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "module linker flags")
 SET(CMAKE_SHARED_LINKER_FLAGS "-mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mabi=aapcs" CACHE INTERNAL "shared linker flags")

@@ -2,12 +2,7 @@ SET(CMAKE_C_FLAGS "-mthumb -fno-builtin -mcpu=cortex-m0 -Wcast-align -Wall -std=
 SET(CMAKE_CXX_FLAGS "-mthumb -fno-builtin -mcpu=cortex-m0 -Wcast-align -Wall -std=c++11 -falign-functions=16 -fno-exceptions -fno-common -ffunction-sections -fdata-sections -fomit-frame-pointer -mabi=aapcs -fno-unroll-loops -ffast-math -ftree-vectorize -fno-rtti" CACHE INTERNAL "cxx compiler flags")
 SET(CMAKE_ASM_FLAGS "-mthumb -mcpu=cortex-m0 -x assembler-with-cpp" CACHE INTERNAL "asm compiler flags")
 
-IF(STM32_USE_NANO_SPECS)
-  MESSAGE(STATUS "Using nano.specs")
-  SET(CMAKE_EXE_LINKER_FLAGS "-specs nano.specs -Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
-ELSE()
-  SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
-ENDIF()
+SET(CMAKE_EXE_LINKER_FLAGS "-Wl,-Map=linker.map -Wl,--gc-sections -mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "executable linker flags")
 
 SET(CMAKE_MODULE_LINKER_FLAGS "-mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "module linker flags")
 SET(CMAKE_SHARED_LINKER_FLAGS "-mthumb -mcpu=cortex-m0 -mabi=aapcs" CACHE INTERNAL "shared linker flags")
