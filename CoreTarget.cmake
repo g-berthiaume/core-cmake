@@ -95,6 +95,53 @@ ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_BINARY_DIR}/GIT_REVISION.h
 
 add_custom_target(GIT_REVISION DEPENDS ${CMAKE_BINARY_DIR}/GIT_REVISION.h)
 
+IF(EXISTS "${CMAKE_SOURCE_DIR}/getGITVersion.sh")
+ADD_DEPENDENCIES("firmware" GIT_REVISION)
+ENDIF()
+
+function(git_describe_dirty _var)
+	if(NOT GIT_FOUND)
+		find_package(Git QUIET)
+	endif()
+	if(NOT GIT_FOUND)
+		set(${_var} "GIT-NOTFOUND" PARENT_SCOPE)
+		return()
+	endif()
+
+	execute_process(COMMAND
+		"${GIT_EXECUTABLE}"
+		describe
+		--always --tags --dirty
+		WORKING_DIRECTORY
+		"${CMAKE_CURRENT_SOURCE_DIR}"
+		RESULT_VARIABLE
+		res
+		OUTPUT_VARIABLE
+		out
+		ERROR_QUIET
+		OUTPUT_STRIP_TRAILING_WHITESPACE)
+	if(NOT res EQUAL 0)
+		set(out "${out}-${res}-NOTFOUND")
+	endif()
+
+	set(${_var} "${out}" PARENT_SCOPE)
+endfunction()
+
+IF(EXISTS "${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in")
+  include(GetGitRevisionDescription)
+  get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+  git_describe_dirty(GIT_DESC)
+  
+  ADD_DEFINITIONS(-DHAS_GIT_DESC)
+  
+  MESSAGE( STATUS "GIT_SHA1: ${GIT_SHA1}" )
+  MESSAGE( STATUS "GIT_DESC: ${GIT_DESC}" )
+
+  configure_file("${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in" "${CMAKE_BINARY_DIR}/GITRevision.cpp" @ONLY)
+  list(APPEND REVISION_SOURCES "${CMAKE_BINARY_DIR}/GITRevision.cpp")
+ENDIF()
+
+
 ADD_DEFINITIONS(-DCORE_MODULE_NAME="${MODULE_NAME}")
 
 IF(STM32_FAMILY STREQUAL "F3")
@@ -175,12 +222,9 @@ ADD_EXECUTABLE("firmware"
   ${NOVA_CORE_UTILS_SOURCES}
   ${NOVA_RTCAN_SOURCES}
   ${WORKSPACE_PACKAGES_SOURCES}
+  ${REVISION_SOURCES}
   ${PROJECT_SOURCES}
 )
-
-IF(EXISTS "${CMAKE_SOURCE_DIR}/getGITVersion.sh")
-ADD_DEPENDENCIES("firmware" GIT_REVISION)
-ENDIF()
 
 TARGET_LINK_LIBRARIES("firmware")
 
