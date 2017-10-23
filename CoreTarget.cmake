@@ -99,48 +99,38 @@ IF(EXISTS "${CMAKE_SOURCE_DIR}/getGITVersion.sh")
 ADD_DEPENDENCIES("firmware" GIT_REVISION)
 ENDIF()
 
-function(git_describe_dirty _var)
-	if(NOT GIT_FOUND)
-		find_package(Git QUIET)
-	endif()
-	if(NOT GIT_FOUND)
-		set(${_var} "GIT-NOTFOUND" PARENT_SCOPE)
-		return()
-	endif()
-
-	execute_process(COMMAND
-		"${GIT_EXECUTABLE}"
-		describe
-		--always --tags --dirty
-		WORKING_DIRECTORY
-		"${CMAKE_CURRENT_SOURCE_DIR}"
-		RESULT_VARIABLE
-		res
-		OUTPUT_VARIABLE
-		out
-		ERROR_QUIET
-		OUTPUT_STRIP_TRAILING_WHITESPACE)
-	if(NOT res EQUAL 0)
-		set(out "${out}-${res}-NOTFOUND")
-	endif()
-
-	set(${_var} "${out}" PARENT_SCOPE)
-endfunction()
-
 IF(EXISTS "${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in")
   include(GetGitRevisionDescription)
-  get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-  git_describe_dirty(GIT_DESC)
+ 
+  git_describe_dirty(WRKS_GIT_DESC ${CMAKE_SOURCE_DIR})
+  git_describe_dirty(CORE_GIT_DESC ${NOVA_ROOT})
   
   ADD_DEFINITIONS(-DHAS_GIT_DESC)
   
-  MESSAGE( STATUS "GIT_SHA1: ${GIT_SHA1}" )
-  MESSAGE( STATUS "GIT_DESC: ${GIT_DESC}" )
+  STRING(REGEX MATCH ".*-dirty" WRKS_IS_DIRTY ${WRKS_GIT_DESC})
+  IF(WRKS_IS_DIRTY) 
+    #SET(WRKS_GIT_DESC "DIRTY")
+    ADD_DEFINITIONS(-DWRKS_IS_DIRTY)
+    MESSAGE( STATUS "WORKSPACE IS DIRTY: ${WRKS_GIT_DESC}" )
+  ELSE()
+    MESSAGE( STATUS "WRKS_GIT_DESC: ${WRKS_GIT_DESC}" )
+  ENDIF()
 
+  STRING(REGEX MATCH ".*-dirty" CORE_IS_DIRTY ${CORE_GIT_DESC})
+  IF(CORE_IS_DIRTY) 
+    #SET(CORE_GIT_DESC "DIRTY")
+    ADD_DEFINITIONS(-DCORE_IS_DIRTY)
+    MESSAGE( STATUS "CORE IS DIRTY: ${CORE_GIT_DESC}" )
+  ELSE()
+    MESSAGE( STATUS "CORE_GIT_DESC: ${CORE_GIT_DESC}" )
+  ENDIF()
+  
   configure_file("${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in" "${CMAKE_BINARY_DIR}/GITRevision.cpp" @ONLY)
+  
+  file(WRITE "${CMAKE_BINARY_DIR}/revisions.txt" "${CORE_GIT_DESC}_${WRKS_GIT_DESC}" )
+  
   list(APPEND REVISION_SOURCES "${CMAKE_BINARY_DIR}/GITRevision.cpp")
 ENDIF()
-
 
 ADD_DEFINITIONS(-DCORE_MODULE_NAME="${MODULE_NAME}")
 
