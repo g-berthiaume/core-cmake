@@ -11,6 +11,7 @@ ENDIF()
 SET( NOVA_CORE_HW_SOURCES
   ${NOVA_CORE_HW_ROOT}/src/core-hw.cpp
   ${NOVA_CORE_HW_ROOT}/src/SDU.cpp
+  ${NOVA_CORE_HW_ROOT}/src/Time.cpp
 )
 
 SET( NOVA_CORE_HW_INCLUDE_DIRS
