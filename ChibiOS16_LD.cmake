@@ -25,6 +25,11 @@ IF(NOT CONFIGURATION_SIZE)
   SET(CONFIGURATION_SIZE 0)
 ENDIF()
 
+IF(NOT TAGS_SIZE)
+  MESSAGE(STATUS "No TAGS_SIZE specified, using default: 0")
+  SET(TAGS_SIZE 0)
+ENDIF()
+
 # Auto-generate linker script
 IF(NOT ChibiOS_LINKER_SCRIPT)
   IF(BOOTLOADER_SIZE GREATER 0)
@@ -35,7 +40,8 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"  flash : org = 0x08000000, len = \${BOOTLOADER_SIZE}\n"
 	"  conf1 : org = 0x08000000 + \${BOOTLOADER_SIZE}, len = \${CONFIGURATION_SIZE}\n"
 	"  conf2 : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE}, len = \${CONFIGURATION_SIZE}\n"
-	"  user  : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${STM32_FLASH_SIZE} - \${BOOTLOADER_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE}\n"
+	"  tags  : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${TAGS_SIZE}\n"
+	"  user  : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE} + \${TAGS_SIZE}, len = \${STM32_FLASH_SIZE} - \${BOOTLOADER_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE} - \${TAGS_SIZE}\n"
 	"  vtram : org = 0x20000000, len = 0xc0\n"
 	"  ram0  : org = 0x200000c0, len = \${STM32_RAM_SIZE} - 0xc0 - 4\n"
 	"  ram1  : org = 0x00000000, len = 0\n"
@@ -55,6 +61,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"_user_address_top = ORIGIN(user) + LENGTH(user);\n"
 	"PROVIDE(user_address_bottom = _user_address_bottom);\n"
 	"PROVIDE(user_address_top = _user_address_top);\n"
+	"_tags_address_bottom = ORIGIN(tags);\n"
+	"_tags_address_top = ORIGIN(tags) + LENGTH(tags);\n"
+	"PROVIDE(tags_address_bottom = _tags_address_bottom);\n"
+	"PROVIDE(tags_address_top = _tags_address_top);\n"
 	"_conf1_address_bottom = ORIGIN(conf1);\n"
 	"_conf1_address_top = ORIGIN(conf1) + LENGTH(conf1);\n"
 	"PROVIDE(conf1_address_bottom = _conf1_address_bottom);\n"
@@ -71,7 +81,8 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"{\n"
 	"  conf1 : org = 0x08000000 + \${BOOTLOADER_SIZE}, len = \${CONFIGURATION_SIZE}\n"
 	"  conf2 : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE}, len = \${CONFIGURATION_SIZE}\n"
-	"  flash : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${STM32_FLASH_SIZE} - \${BOOTLOADER_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE}\n"
+	"  tags  : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${TAGS_SIZE}\n"
+	"  flash : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE} + \${TAGS_SIZE}, len = \${STM32_FLASH_SIZE} - \${BOOTLOADER_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE} - \${TAGS_SIZE}\n"
 	"  ram0  : org = 0x200000c0, len = \${STM32_RAM_SIZE} - 0xc0 - 4\n"
 	"  ram1 : org = 0x00000000, len = 0\n"
 	"  ram2 : org = 0x00000000, len = 0\n"
@@ -87,6 +98,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"REGION_ALIAS(\"DATA_RAM\", ram0);\n"
 	"REGION_ALIAS(\"BSS_RAM\", ram0);\n"
 	"REGION_ALIAS(\"HEAP_RAM\", ram0);\n"
+	"_tags_address_bottom = ORIGIN(tags);\n"
+	"_tags_address_top = ORIGIN(tags) + LENGTH(tags);\n"
+	"PROVIDE(tags_address_bottom = _tags_address_bottom);\n"
+	"PROVIDE(tags_address_top = _tags_address_top);\n"
 	"_conf1_address_bottom = ORIGIN(conf1);\n"
 	"_conf1_address_top = ORIGIN(conf1) + LENGTH(conf1);\n"
 	"PROVIDE(conf1_address_bottom = _conf1_address_bottom);\n"
@@ -104,7 +119,8 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
       "{\n"
       "  conf1 : org = 0x08000000, len = \${CONFIGURATION_SIZE}\n"
       "  conf2 : org = 0x08000000 + \${CONFIGURATION_SIZE}, len = \${CONFIGURATION_SIZE}\n"
-      "  flash : org = 0x08000000 + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${STM32_FLASH_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE}\n"
+      "  tags  : org = 0x08000000 + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${TAGS_SIZE}\n"
+      "  flash : org = 0x08000000 + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE} + \${TAGS_SIZE}, len = \${STM32_FLASH_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE} - \${TAGS_SIZE}\n"
       "  ram0  : org = 0x20000000, len = \${STM32_RAM_SIZE}\n"
       "  ram1 : org = 0x00000000, len = 0\n"
       "  ram2 : org = 0x00000000, len = 0\n"
@@ -119,6 +135,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
       "REGION_ALIAS(\"DATA_RAM\", ram0);\n"
       "REGION_ALIAS(\"BSS_RAM\", ram0);\n"
       "REGION_ALIAS(\"HEAP_RAM\", ram0);\n"
+	"_tags_address_bottom = ORIGIN(tags);\n"
+	"_tags_address_top = ORIGIN(tags) + LENGTH(tags);\n"
+	"PROVIDE(tags_address_bottom = _tags_address_bottom);\n"
+	"PROVIDE(tags_address_top = _tags_address_top);\n"
 	"_conf1_address_bottom = ORIGIN(conf1);\n"
 	"_conf1_address_top = ORIGIN(conf1) + LENGTH(conf1);\n"
 	"PROVIDE(conf1_address_bottom = _conf1_address_bottom);\n"
@@ -132,3 +152,4 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
   ENDIF()
   SET(ChibiOS_LINKER_SCRIPT ${CMAKE_BINARY_DIR}/chibios_link.ld.in)
 ENDIF()     
+
