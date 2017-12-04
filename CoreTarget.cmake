@@ -2,7 +2,7 @@ include(CMakeParseArguments)
 
 find_program(OPENOCD openocd)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14") #-std=c++11
 
 cmake_policy(SET CMP0005 NEW)
 
