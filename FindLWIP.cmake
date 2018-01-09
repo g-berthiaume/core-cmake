@@ -1,23 +1,19 @@
-MESSAGE( STATUS "CHIBIOS_ROOT: ${CHIBIOS_ROOT}" )
-SET(LWIP ${CHIBIOS_ROOT}/ext/lwip)
-
-IF( NOT EXISTS ${LWIP})
-  MESSAGE( FATAL_ERROR "${LWIP} does not exists. Have you extracted the archive there?" )
-ENDIF()
+SET(LWIP ${NOVA_ROOT}/libs/lwip)
 
 SET(LWBINDSRC 
-#	${CHIBIOS_ROOT}/os/various/lwip_bindings/lwipthread.c
-	${CHIBIOS_ROOT}/os/various/lwip_bindings/arch/sys_arch.c
+        ${CHIBIOS_ROOT}/os/various/lwip_bindings/arch/sys_arch.c
 )
 
 SET(LWNETIFSRC
-	${LWIP}/src/netif/etharp.c
+        ${LWIP}/src/netif/ethernet.c
 )
 
 SET(LWCORESRC 
-        ${LWIP}/src/core/dhcp.c
-        ${LWIP}/src/core/dns.c
         ${LWIP}/src/core/init.c
+        ${LWIP}/src/core/def.c
+        ${LWIP}/src/core/dns.c
+        ${LWIP}/src/core/inet_chksum.c
+        ${LWIP}/src/core/ip.c
         ${LWIP}/src/core/mem.c
         ${LWIP}/src/core/memp.c
         ${LWIP}/src/core/netif.c
@@ -28,20 +24,19 @@ SET(LWCORESRC
         ${LWIP}/src/core/tcp.c
         ${LWIP}/src/core/tcp_in.c
         ${LWIP}/src/core/tcp_out.c
+        ${LWIP}/src/core/timeouts.c
         ${LWIP}/src/core/udp.c
 )
 
 SET(LWIPV4SRC
         ${LWIP}/src/core/ipv4/autoip.c
+        ${LWIP}/src/core/ipv4/dhcp.c
+        ${LWIP}/src/core/ipv4/etharp.c
         ${LWIP}/src/core/ipv4/icmp.c
         ${LWIP}/src/core/ipv4/igmp.c
-        ${LWIP}/src/core/ipv4/inet.c
-        ${LWIP}/src/core/ipv4/inet_chksum.c
-        ${LWIP}/src/core/ipv4/ip.c
-        ${LWIP}/src/core/ipv4/ip_addr.c
-        ${LWIP}/src/core/ipv4/ip_frag.c
-        ${LWIP}/src/core/def.c
-        ${LWIP}/src/core/timers.c
+        ${LWIP}/src/core/ipv4/ip4_frag.c
+        ${LWIP}/src/core/ipv4/ip4.c
+        ${LWIP}/src/core/ipv4/ip4_addr.c
 )
 
 SET(LWAPISRC
