@@ -1,7 +1,7 @@
 SET(LWIP ${NOVA_ROOT}/libs/lwip)
 
 SET(LWBINDSRC 
-        ${CHIBIOS_ROOT}/os/various/lwip_bindings/arch/sys_arch.c
+        ${LWIP}/bindings/chibios/arch/sys_arch.c
 )
 
 SET(LWNETIFSRC
@@ -53,7 +53,7 @@ SET(LWAPISRC
 SET(LWIP_SOURCES ${LWBINDSRC} ${LWNETIFSRC} ${LWCORESRC} ${LWIPV4SRC} ${LWAPISRC})
 
 SET( LWIP_INCLUDE_DIRS
-        ${CHIBIOS_ROOT}/os/various/lwip_bindings
+        ${LWIP}/bindings/chibios
         ${LWIP}/src/include
         ${LWIP}/src/include/ipv4
 )
