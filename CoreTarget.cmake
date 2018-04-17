@@ -255,7 +255,7 @@ FUNCTION(ADD_DEPLOY_TARGETS TARGET)
         COMMAND ${CMAKE_COMMAND} -E copy ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.elf
         COMMAND ${CMAKE_OBJCOPY} -Oihex ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.hex
         COMMAND ${CMAKE_OBJCOPY} -Obinary ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.bin
-        COMMAND CoreBootloader.py hex_crc "${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.hex" ${PROGRAM_SIZE} > ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.crc
+        COMMAND CoreHexCRC.py "${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.hex" ${PROGRAM_SIZE} > ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}_${CORE_GIT_DESC}.crc
     )
 ENDFUNCTION()
 
@@ -291,7 +291,7 @@ ENDIF()
 
 add_custom_target(firmware.crc
         DEPENDS firmware.hex
-        COMMAND CoreBootloader.py hex_crc firmware.hex ${PROGRAM_SIZE} > firmware.crc
+        COMMAND CoreHexCRC.py firmware.hex ${PROGRAM_SIZE} > firmware.crc
 )
 
 ENDMACRO()
