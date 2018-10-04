@@ -140,6 +140,8 @@ IF(EXISTS "${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in")
   configure_file("${CMAKE_SOURCE_DIR}/GITRevisionTemplate.cpp.in" "${CMAKE_BINARY_DIR}/GITRevision.cpp" @ONLY)
   
   file(WRITE "${CMAKE_BINARY_DIR}/revisions.txt" "${CORE_GIT_DESC}_${WRKS_GIT_DESC}" )
+  file(WRITE "${CMAKE_BINARY_DIR}/wrks_revision.txt" "${WRKS_GIT_DESC}" )
+  file(WRITE "${CMAKE_BINARY_DIR}/core_revision.txt" "${CORE_GIT_DESC}" )
   
   list(APPEND REVISION_SOURCES "${CMAKE_BINARY_DIR}/GITRevision.cpp")
 ENDIF()
@@ -253,6 +255,7 @@ FUNCTION(ADD_DEPLOY_TARGETS TARGET)
     ENDIF()
     ADD_CUSTOM_TARGET(deploy DEPENDS ${TARGET} 
         COMMAND ${CMAKE_COMMAND} -E copy ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}.elf
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/wrks_revision.txt ${TARGET}_${MODULE_NAME}.revision
         COMMAND ${CMAKE_OBJCOPY} -Oihex ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}.hex
         COMMAND ${CMAKE_OBJCOPY} -Obinary ${FILENAME} ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}.bin
         COMMAND CoreHexCRC.py "${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}.hex" ${PROGRAM_SIZE} > ${TARGET}_${MODULE_NAME}_${WRKS_GIT_DESC}.crc
