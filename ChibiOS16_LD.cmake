@@ -79,6 +79,7 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
       FILE(WRITE ${CMAKE_BINARY_DIR}/chibios_link.ld.in 
 	"MEMORY\n"
 	"{\n"
+	"  bootloader : org = 0x08000000, len = \${BOOTLOADER_SIZE}\n"
 	"  conf1 : org = 0x08000000 + \${BOOTLOADER_SIZE}, len = \${CONFIGURATION_SIZE}\n"
 	"  conf2 : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE}, len = \${CONFIGURATION_SIZE}\n"
 	"  flash : org = 0x08000000 + \${BOOTLOADER_SIZE} + \${CONFIGURATION_SIZE} + \${CONFIGURATION_SIZE}, len = \${STM32_FLASH_SIZE} - \${CONFIGURATION_SIZE} - \${CONFIGURATION_SIZE} - \${TAGS_SIZE}\n"
@@ -102,6 +103,10 @@ IF(NOT ChibiOS_LINKER_SCRIPT)
 	"_tags_address_top = ORIGIN(tags) + LENGTH(tags);\n"
 	"PROVIDE(tags_address_bottom = _tags_address_bottom);\n"
 	"PROVIDE(tags_address_top = _tags_address_top);\n"
+	"_bootloader_address_bottom = ORIGIN(bootloader);\n"
+	"_bootloader_address_top = ORIGIN(bootloader) + LENGTH(bootloader);\n"
+	"PROVIDE(bootloader_address_bottom = _bootloader_address_bottom);\n"
+	"PROVIDE(bootloader_address_top = _bootloader_address_top);\n"
 	"_conf1_address_bottom = ORIGIN(conf1);\n"
 	"_conf1_address_top = ORIGIN(conf1) + LENGTH(conf1);\n"
 	"PROVIDE(conf1_address_bottom = _conf1_address_bottom);\n"
