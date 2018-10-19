@@ -181,7 +181,7 @@ function(git_describe_dirty _var)
 	execute_process(COMMAND
 		"${GIT_EXECUTABLE}"
 		describe
-		--always --tags --dirty
+		--always --tags --dirty --long
 		WORKING_DIRECTORY
 		"${ARGN}"
 		RESULT_VARIABLE
